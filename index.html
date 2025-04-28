@@ -16,84 +16,60 @@
       cursor: none;
       transform-origin: center;
     }
-
     @keyframes trippyBackground {
       0% {background-position: 0% 50%;}
       50% {background-position: 100% 50%;}
       100% {background-position: 0% 50%;}
     }
-
+    @keyframes textShake {
+      0% { transform: translate(0,0) rotate(0); }
+      25% { transform: translate(-4px,2px) rotate(-1deg); }
+      50% { transform: translate(4px,-2px) rotate(1deg); }
+      75% { transform: translate(-2px,4px) rotate(-1deg); }
+      100% { transform: translate(0,0) rotate(0); }
+    }
+    .text-shake {
+      display: inline-block;
+      animation: textShake 0.1s infinite;
+    }
     #cursor, #cursor2 {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 20px;
-      height: 20px;
-      background: white;
-      border-radius: 50%;
-      pointer-events: none;
-      mix-blend-mode: difference;
+      position: fixed; top: 0; left: 0;
+      width: 20px; height: 20px;
+      background: white; border-radius: 50%;
+      pointer-events: none; mix-blend-mode: difference;
       z-index: 10000;
     }
-
     .content {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
       text-align: center;
-      color: white;
-      text-shadow: 2px 2px 8px black;
+      color: white; text-shadow: 2px 2px 8px black;
     }
-
-    h1 {
-      font-size: 70px;
-      margin: 0;
-    }
-
-    h2 {
-      font-size: 32px;
-      margin: 10px 0 20px 0;
-    }
-
+    h1 { font-size: 70px; margin: 0; }
+    h2 { font-size: 32px; margin: 10px 0 20px; }
     .stack {
-      font-size: 24px;
-      margin-bottom: 30px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
+      font-size: 24px; margin-bottom: 30px;
+      display: flex; justify-content: center;
+      flex-wrap: wrap; gap: 20px;
     }
-
     .stack span {
       background: rgba(0,0,0,0.3);
-      padding: 10px 20px;
-      border-radius: 20px;
-      font-weight: bold;
-      box-shadow: 0 0 10px black;
+      padding: 10px 20px; border-radius: 20px;
+      font-weight: bold; box-shadow: 0 0 10px black;
     }
-
     .links {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      font-size: 20px;
+      display: flex; justify-content: center;
+      gap: 30px; font-size: 20px;
     }
-
     .links a {
-      color: white;
-      text-decoration: none;
-      padding: 10px 20px;
-      background: rgba(0,0,0,0.5);
-      border-radius: 20px;
-      transition: 0.3s;
+      color: white; text-decoration: none;
+      padding: 10px 20px; background: rgba(0,0,0,0.5);
+      border-radius: 20px; transition: 0.3s;
       box-shadow: 0 0 10px black;
     }
-
     .links a:hover {
-      background: rgba(255,255,255,0.3);
-      color: black;
+      background: rgba(255,255,255,0.3); color: black;
     }
   </style>
 </head>
@@ -102,84 +78,58 @@
   <div id="cursor2"></div>
 
   <div class="content">
-    <h1 id="title">AERA</h1>
-    <h2 id="subtitle">developer from kazan</h2>
+    <h1 class="text-shake" id="title">AERA</h1>
+    <h2 class="text-shake" id="subtitle">developer from kazan</h2>
 
     <div class="stack">
-      <span>Python</span>
-      <span>C/C++</span>
-      <span>SQL</span>
-      <span>Rust</span>
+      <span class="text-shake">Python</span>
+      <span class="text-shake">C/C++</span>
+      <span class="text-shake">SQL</span>
+      <span class="text-shake">Rust</span>
     </div>
 
     <div class="links">
-      <a href="https://t.me/neheofen" target="_blank">Telegram</a>
-      <a href="https://github.com/heofen" target="_blank">GitHub</a>
+      <a class="text-shake" href="https://t.me/neheofen" target="_blank">Telegram</a>
+      <a class="text-shake" href="https://github.com/heofen" target="_blank">GitHub</a>
     </div>
   </div>
 
   <script>
     const cursor = document.getElementById('cursor');
     const cursor2 = document.getElementById('cursor2');
-    const title = document.getElementById('title');
-    const subtitle = document.getElementById('subtitle');
     const body = document.body;
+    function randomColor(){
+      const hex = '0123456789ABCDEF';
+      return '#'+[...Array(6)].map(()=>hex[Math.random()*16|0]).join('');
+    }
 
-    document.addEventListener('mousemove', function(e) {
-      const time = Date.now() / 100;
-      const wobbleX = Math.sin(time) * 20 + (Math.random() - 0.5) * 20;
-      const wobbleY = Math.cos(time) * 20 + (Math.random() - 0.5) * 20;
-
-      cursor.style.left = (e.clientX + wobbleX) + 'px';
-      cursor.style.top = (e.clientY + wobbleY) + 'px';
-
-      cursor2.style.left = (e.clientX - wobbleX) + 'px';
-      cursor2.style.top = (e.clientY - wobbleY) + 'px';
+    document.addEventListener('mousemove', e=>{
+      const t=Date.now()/100;
+      const dx=Math.sin(t)*20+(Math.random()-0.5)*20;
+      const dy=Math.cos(t)*20+(Math.random()-0.5)*20;
+      cursor.style.left=`${e.clientX+dx}px`;
+      cursor.style.top=`${e.clientY+dy}px`;
+      cursor2.style.left=`${e.clientX-dx}px`;
+      cursor2.style.top=`${e.clientY-dy}px`;
     });
 
-    function pulse() {
-      const size = 20 + Math.sin(Date.now() / 200) * 15 + Math.random() * 10;
-      cursor.style.width = size + 'px';
-      cursor.style.height = size + 'px';
-
-      const size2 = 15 + Math.cos(Date.now() / 200) * 10 + Math.random() * 8;
-      cursor2.style.width = size2 + 'px';
-      cursor2.style.height = size2 + 'px';
-
+    function pulse(){
+      const s=20+Math.sin(Date.now()/200)*15+Math.random()*10;
+      const s2=15+Math.cos(Date.now()/200)*10+Math.random()*8;
+      cursor.style.width=cursor.style.height=`${s}px`;
+      cursor2.style.width=cursor2.style.height=`${s2}px`;
       requestAnimationFrame(pulse);
     }
-
     pulse();
 
-    function randomColor() {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
-    }
+    setInterval(()=>{
+      cursor.style.backgroundColor=randomColor();
+      cursor2.style.backgroundColor=randomColor();
+    },300);
 
-    setInterval(() => {
-      cursor.style.backgroundColor = randomColor();
-      cursor2.style.backgroundColor = randomColor();
-    }, 300);
-
-    setInterval(() => {
-      const rotate = (Math.random() - 0.5) * 10;
-      const scale = 1 + (Math.random() - 0.5) * 0.2;
-      body.style.transform = `rotate(${rotate}deg) scale(${scale})`;
-    }, 100);
-
-    setInterval(() => {
-      const dx = (Math.random() - 0.5) * 20;
-      const dy = (Math.random() - 0.5) * 20;
-      const scale = 1 + (Math.random() - 0.5) * 0.3;
-      title.style.transform = `translate(${dx}px, ${dy}px) scale(${scale}) rotate(${Math.random() * 20 - 10}deg)`;
-      subtitle.style.transform = `translate(${dx}px, ${dy}px) scale(${scale}) rotate(${Math.random() * 20 - 10}deg)`;
-      title.style.color = randomColor();
-      subtitle.style.color = randomColor();
-    }, 300);
+    setInterval(()=>{
+      body.style.transform=`rotate(${(Math.random()-0.5)*10}deg) scale(${1+(Math.random()-0.5)*0.2})`;
+    },100);
   </script>
 </body>
 </html>
