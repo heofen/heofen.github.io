@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Aera — Developer from Kazan</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      background: linear-gradient(45deg, #ff00cc, #3333ff, #00ffcc, #ff6600);
+      background-size: 600% 600%;
+      animation: trippyBackground 5s linear infinite;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      cursor: none;
+      transform-origin: center;
+    }
+
+    @keyframes trippyBackground {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    #cursor, #cursor2 {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      pointer-events: none;
+      mix-blend-mode: difference;
+      z-index: 10000;
+    }
+
+    .content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+      text-shadow: 2px 2px 8px black;
+    }
+
+    h1 {
+      font-size: 70px;
+      margin: 0;
+    }
+
+    h2 {
+      font-size: 32px;
+      margin: 10px 0 20px 0;
+    }
+
+    .stack {
+      font-size: 24px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .stack span {
+      background: rgba(0,0,0,0.3);
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: bold;
+      box-shadow: 0 0 10px black;
+    }
+
+    .links {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-size: 20px;
+    }
+
+    .links a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      background: rgba(0,0,0,0.5);
+      border-radius: 20px;
+      transition: 0.3s;
+      box-shadow: 0 0 10px black;
+    }
+
+    .links a:hover {
+      background: rgba(255,255,255,0.3);
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div id="cursor"></div>
+  <div id="cursor2"></div>
+
+  <div class="content">
+    <h1 id="title">AERA</h1>
+    <h2 id="subtitle">developer from kazan</h2>
+
+    <div class="stack">
+      <span>Python</span>
+      <span>C/C++</span>
+      <span>SQL</span>
+      <span>Rust</span>
+    </div>
+
+    <div class="links">
+      <a href="https://t.me/neheofen" target="_blank">Telegram</a>
+      <a href="https://github.com/heofen" target="_blank">GitHub</a>
+    </div>
+  </div>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const cursor2 = document.getElementById('cursor2');
+    const title = document.getElementById('title');
+    const subtitle = document.getElementById('subtitle');
+    const body = document.body;
+
+    document.addEventListener('mousemove', function(e) {
+      const time = Date.now() / 100;
+      const wobbleX = Math.sin(time) * 20 + (Math.random() - 0.5) * 20;
+      const wobbleY = Math.cos(time) * 20 + (Math.random() - 0.5) * 20;
+
+      cursor.style.left = (e.clientX + wobbleX) + 'px';
+      cursor.style.top = (e.clientY + wobbleY) + 'px';
+
+      cursor2.style.left = (e.clientX - wobbleX) + 'px';
+      cursor2.style.top = (e.clientY - wobbleY) + 'px';
+    });
+
+    function pulse() {
+      const size = 20 + Math.sin(Date.now() / 200) * 15 + Math.random() * 10;
+      cursor.style.width = size + 'px';
+      cursor.style.height = size + 'px';
+
+      const size2 = 15 + Math.cos(Date.now() / 200) * 10 + Math.random() * 8;
+      cursor2.style.width = size2 + 'px';
+      cursor2.style.height = size2 + 'px';
+
+      requestAnimationFrame(pulse);
+    }
+
+    pulse();
+
+    function randomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    setInterval(() => {
+      cursor.style.backgroundColor = randomColor();
+      cursor2.style.backgroundColor = randomColor();
+    }, 300);
+
+    setInterval(() => {
+      const rotate = (Math.random() - 0.5) * 10;
+      const scale = 1 + (Math.random() - 0.5) * 0.2;
+      body.style.transform = `rotate(${rotate}deg) scale(${scale})`;
+    }, 100);
+
+    setInterval(() => {
+      const dx = (Math.random() - 0.5) * 20;
+      const dy = (Math.random() - 0.5) * 20;
+      const scale = 1 + (Math.random() - 0.5) * 0.3;
+      title.style.transform = `translate(${dx}px, ${dy}px) scale(${scale}) rotate(${Math.random() * 20 - 10}deg)`;
+      subtitle.style.transform = `translate(${dx}px, ${dy}px) scale(${scale}) rotate(${Math.random() * 20 - 10}deg)`;
+      title.style.color = randomColor();
+      subtitle.style.color = randomColor();
+    }, 300);
+  </script>
+</body>
+</html>
